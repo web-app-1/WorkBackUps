@@ -1,0 +1,35 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+import time
+
+# Ruta del controlador de Chrome
+driver_path = "C:/Users/GbitCorp/Desktop/chromedriver-win64/chromedriver.exe"
+service = Service(executable_path=driver_path)
+
+# Inicializa Chrome con Selenium
+driver = webdriver.Chrome(service=service)
+
+# Abre la URL deseada
+url = "https://luisdelrio.digital/"
+driver.get(url)
+
+# Espera a que la página cargue completamente
+time.sleep(5)
+
+# ID del elemento que deseas capturar
+element_id = "certifications"  # Cambia esto por el ID de tu elemento
+
+# Encuentra el elemento por ID
+element = driver.find_element("id", element_id)
+
+# Desplaza el elemento a la vista utilizando JavaScript para centrarlo en la pantalla
+driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+
+# Espera un segundo para asegurarse de que el scroll ha terminado
+time.sleep(1)
+
+# Captura solo el elemento como una imagen
+element.screenshot(f'{element_id}_screenshot.png')
+
+# Cierra el navegador
+driver.quit()
